@@ -12,21 +12,28 @@ export async function middleware(request: NextRequest) {
     kv.get("token"),
   ]);
 
-  if (pathname.startsWith("/admin")) {
-    // Check if the request is for the admin section
-    if (validUrl && validToken && pathname === validUrl && token === validToken) {
+  // Both validUrl and request.url are defined and are strings
+  if (
+    validUrl &&
+    typeof validUrl === "string" &&
+    request.url &&
+    typeof request.url === "string"
+  ) {
+    if (pathname === validUrl && token === validToken) {
       // Allow access if URL and token are correct
-      return NextResponse.rewrite(new URL("/admin", request.url));
+      return NextResponse.rewrite(
+        new URL("/admin", request.url)
+      ); // Corrected Rewrite
     } else {
       // Redirect to homepage if URL or token is incorrect
-      return NextResponse.redirect(new URL("/not-found", request.url));
+      return NextResponse.rewrite(new URL("/", request.url)); // Corrected Redirect
     }
   }
 
-  // If not an admin route, continue with normal processing
+  // If not an admin route or variables are undefined, continue with normal processing
   return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-  }
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
