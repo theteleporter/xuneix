@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# XUNEIX  
+*   **Next.js Link Rotator**
 
-## Getting Started
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-First, run the development server:
+Secure your Next.js admin panel with this open-source link rotator! 🛡️ This tool automatically generates dynamic, time-sensitive URLs with secure tokens to prevent unauthorized access.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   **Dynamic URL Generation:**  Hides your admin panel behind a constantly changing URL.
+*   **Secure Token Authentication:** Adds an extra layer of security with randomly generated tokens.
+*   **Customizable Rotation Frequency:** Configure how often the link changes (hourly, daily, etc.).
+*   **Vercel KV Integration:**  Stores the URL and token securely using Vercel KV.
+*   **Modern UI:** Built with Shadcn UI and Tailwind CSS for a clean and intuitive interface.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Benefits
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+*   **Enhanced Security:** Makes your admin panel significantly harder to find and access.
+*   **Easy Setup:** Simple to integrate into your Next.js project.
+*   **Customizable:** Tailor the rotation frequency and appearance to your needs.
+*   **Open Source:** Free to use and modify under the MIT license.
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/theteleporter/xuneix.git
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  **Install Dependencies:**
+    ```bash
+    cd link-rotator
+    npm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3.  **Set Up Vercel KV:**
+    *   Create a Vercel KV instance.
+    *   Update your environment variables with your KV credentials.
 
-## Deploy on Vercel
+4.  **Configure Initial Link:**
+    *   Create an `initial-link.json` file in the project root and add your initial URL and token.
+    *   The file should look like this:
+        ```json
+        {
+            "url": "/admin/protected",
+            "token": "your_initial_secure_token"
+        }
+        ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5.  **Start the Development Server:**
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usage
+
+1.  Access the protected admin page using the generated link.
+2.  Manually trigger link rotation through the UI. 
+3.  Optionally, set up a Vercel Cron Job to automatically rotate the link.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+
+## License
+
+This project is licensed under the MIT License.
