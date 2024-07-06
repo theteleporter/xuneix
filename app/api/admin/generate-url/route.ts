@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { kv } from '@vercel/kv'; // Import Vercel KV
+import { ROTATED_URLS_KEY, MAX_ROTATED_URLS } from "@/app/constants";
 
 export async function GET() {
     const newUrlSegment = crypto.randomBytes(5).toString("hex");
@@ -16,6 +17,13 @@ export async function GET() {
         // Store in Vercel KV with 24-hour expiration
         await kv.set("adminUrl", newAdminUrl, { ex: 60 * 60 * 24 }); // 24 hours in seconds
         await kv.set("token", newToken, { ex: 60 * 60 * 24 });
+    // Add new URL to rotatedUrls, limiting size
+        let rotatedUrls: string[] = (await kv.get(ROTATED_URLS_KEY)) || []; 
+        rotatedUrls.push(newAdminUrl);
+        if (rotatedUrls.length > MAX_ROTATED_URLS) {
+            rotatedUrls.shift(); // Remove the oldest URL
+        }
+        await kv.set(ROTATED_URLS_KEY, rotatedUrls);
   
     //Construct the email HTML with the generated variables
     const emailHtml = `
