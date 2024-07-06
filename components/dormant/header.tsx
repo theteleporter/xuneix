@@ -32,8 +32,7 @@ import Logo from "./logo";
 
 export default function Header() {
   return (
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-      <header className="sticky top-0 z-30 flex justify-between h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <header className="sticky top-0 z-30 flex justify-between h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:gap-4 sm:py-4 sm:pl-14">
         <div className="flex items-center gap-2">
           <Sheet>
             <SheetTrigger asChild>
@@ -120,6 +119,5 @@ export default function Header() {
           </DropdownMenu>
         </div>
       </header>
-    </div>
   );
 }
