@@ -1,30 +1,34 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-import { kv } from '@vercel/kv'; // Import Vercel KV
-import { ADMIN_BASE_PATH, ROTATED_URLS_KEY, MAX_ROTATED_URLS } from "@/app/constants";
+import { kv } from "@vercel/kv"; // Import Vercel KV
+import {
+  ADMIN_BASE_PATH,
+  ROTATED_URLS_KEY,
+  MAX_ROTATED_URLS,
+} from "@/app/constants";
 
 export async function GET() {
-    const newUrlSegment = crypto.randomBytes(5).toString("hex");
-    const newAdminUrl = `${ADMIN_BASE_PATH}/${newUrlSegment}`; // Base path for all admin pages
-    const newToken = crypto
+  const newUrlSegment = crypto.randomBytes(5).toString("hex");
+  const newAdminUrl = `${ADMIN_BASE_PATH}/${newUrlSegment}`; // Base path for all admin pages
+  const newToken = crypto
     .randomBytes(64) // You can adjust the token length as needed
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_");
 
-    try {
-        // Store in Vercel KV with 24-hour expiration
-        await kv.set("adminUrl", newAdminUrl, { ex: 60 * 60 * 24 }); // 24 hours in seconds
-        await kv.set("token", newToken, { ex: 60 * 60 * 24 });
+  try {
+    // Store in Vercel KV with 24-hour expiration
+    await kv.set("adminUrl", newAdminUrl, { ex: 60 * 60 * 24 }); // 24 hours in seconds
+    await kv.set("token", newToken, { ex: 60 * 60 * 24 });
     // Add new URL to rotatedUrls, limiting size
-        let rotatedUrls: string[] = (await kv.get(ROTATED_URLS_KEY)) || []; 
-        rotatedUrls.push(newAdminUrl);
-        if (rotatedUrls.length > MAX_ROTATED_URLS) {
-            rotatedUrls.shift(); // Remove the oldest URL
-        }
-        await kv.set(ROTATED_URLS_KEY, rotatedUrls);
-  
+    let rotatedUrls: string[] = (await kv.get(ROTATED_URLS_KEY)) || [];
+    rotatedUrls.push(newAdminUrl);
+    if (rotatedUrls.length > MAX_ROTATED_URLS) {
+      rotatedUrls.shift(); // Remove the oldest URL
+    }
+    await kv.set(ROTATED_URLS_KEY, rotatedUrls);
+
     //Construct the email HTML with the generated variables
     const emailHtml = `
           <!DOCTYPE html>
@@ -160,7 +164,9 @@ export async function GET() {
   <div class="container mx-auto p-6 rounded-lg bg-gray-100" style="max-width: 480px; margin: 0; padding: 20px 10px 48px;">
     <div class="flex justify-center items-center mb-4">
       <a href="${process.env.NEXT_PUBLIC_APP_URL}">
-        <img src="${process.env.NEXT_PUBLIC_APP_URL}/icon.jpeg" width="32" height="32" alt="Xuneix, Inc">
+        <img src="${
+          process.env.NEXT_PUBLIC_APP_URL
+        }/icon.jpeg" width="32" height="32" alt="Xuneix, Inc">
       </a>
     </div>
     <div style="font-size: 24px; line-height: 1.25;">
@@ -171,16 +177,22 @@ export async function GET() {
       <p style="margin: 0 0 10px 0; text-align: left;">Hey <strong>The Teleporter</strong>!</p>
       <p style="margin: 0 0 10px 0; text-align: left;">A new admin url and token have been generated. Below are the details:</p>
       
-      <p style="margin: 0 0 10px 0; text-align: left;"><strong>New Url:</strong> ${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}${newAdminUrl}</p>
+      <p style="margin: 0 0 10px 0; text-align: left;"><strong>New Url:</strong> ${
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+      }${newAdminUrl}</p>
       <p style="margin: 0 0 10px 0; text-align: left;"><strong>Token:</strong> <span class="break-all">${newToken}</span></p>
 
-      <a style="color: #0366d6; font-size: 12px; text-decoration: none;" href="${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}${newAdminUrl}?token=${newToken}">
+      <a style="color: #0366d6; font-size: 12px; text-decoration: none;" href="${
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+      }${newAdminUrl}?token=${newToken}">
         <button style="font-size: 14px; background-color: #628CF5; color: #fff; line-height: 1.5; border-radius: 0.5em; border: 0px; padding: 12px 24px;">Go to admin panel</button>
       </a>
     </div>
 
     <div style="text-align: center;">
-      <a style="color: #0366d6; font-size: 12px;" href="${process.env.NEXT_PUBLIC_APP_URL}">Visit official website</a>
+      <a style="color: #0366d6; font-size: 12px;" href="${
+        process.env.NEXT_PUBLIC_APP_URL
+      }">Visit official website</a>
     </div>
 
     <p style="color: #6a737d; font-size: 12px; text-align: center; margin-top: 60px;">Crept, Inc. ・57 Space Xuneix, Inc ・Los Angels, CA 90020</p>
@@ -217,4 +229,3 @@ export async function GET() {
     );
   }
 }
-

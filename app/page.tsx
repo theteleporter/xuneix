@@ -43,14 +43,15 @@ export default function Home() {
       setIsLoading(true);
       try {
         const [storedAdminUrl, storedAdminToken] = await Promise.all([
-          kv.get<string | null>("adminUrl"),  // Allow null values
-          kv.get<string | null>("token"),     // Allow null values
+          kv.get<string | null>("adminUrl"),
+          kv.get<string | null>("token"),
         ]);
   
         if (storedAdminUrl && storedAdminToken) {
           setAdminUrl(storedAdminUrl);
           setAdminToken(storedAdminToken);
         } else {
+          console.error("Error fetching: URL or token not found in KV store");
           toast({
             variant: "destructive",
             title: "No URL or Token Found",
@@ -58,12 +59,11 @@ export default function Home() {
           });
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data from KV:", error);
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description:
-            "There was a problem fetching the URL and token from KV.",
+          description: "There was an error fetching data. Please try again later.",
         });
       } finally {
         setIsLoading(false);
@@ -71,7 +71,7 @@ export default function Home() {
     };
   
     fetchData();
-  }, [toast]);
+  }, [toast]);  
    
 
   const rotateLink = async () => {
