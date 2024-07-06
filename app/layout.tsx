@@ -68,14 +68,14 @@ export const metadata: Metadata = {
   creator: "The Teleporter",
   publisher: "The Teleporter",
   appLinks: {
-    web: { url: `${process.env.NEXT_PUBLIC_URL}`, should_fallback: true },
+    web: { url: `${process.env.NEXT_PUBLIC_APP_URL}`, should_fallback: true },
   },
   formatDetection: {
     email: true,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://xuneix.theteleporter.me"),
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL}`),
   alternates: {
     canonical: "/",
     languages: {
