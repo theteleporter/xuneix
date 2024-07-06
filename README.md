@@ -29,7 +29,7 @@ Secure your Next.js admin panel with this open-source link rotator! 🛡️ This
 
 2.  **Install Dependencies:**
     ```bash
-    cd link-rotator
+    cd xuneix
     npm install
     ```
 
