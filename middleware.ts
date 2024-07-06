@@ -6,31 +6,30 @@ export async function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
   const token = searchParams.get("token");
 
-  // Fetch admin config from Vercel KV
+  // Fetch admin config from Vercel KV, but handle potential nulls
   const [validUrl, validToken] = await Promise.all([
-    kv.get("adminUrl"),
-    kv.get("token"),
+    kv.get<string | null>("adminUrl"),
+    kv.get<string | null>("token"),
   ]);
 
-  // Both validUrl and request.url are defined and are strings
-  if (
-    validUrl &&
-    typeof validUrl === "string" &&
-    request.url &&
-    typeof request.url === "string"
-  ) {
-    if (pathname === validUrl && token === validToken) {
-      // Allow access if URL and token are correct
-      return NextResponse.rewrite(
-        new URL("/admin", request.url)
-      ); // Corrected Rewrite
+  if (pathname.startsWith("/admin")) {
+    // Checks if both the URL and token are valid AND not null
+    if (validUrl && validToken && pathname === validUrl && token === validToken) {
+      // Allow access (rewrite to the actual protected admin page)
+      return NextResponse.rewrite(new URL("/admin", request.url));
     } else {
-      // Redirect to homepage if URL or token is incorrect
-      return NextResponse.rewrite(new URL("/", request.url)); // Corrected Redirect
+      // Invalid credentials, but check if request.url is valid first
+      if (request.url) {
+        // Redirect to the home page
+        return NextResponse.redirect(new URL("/", request.url));
+      } else {
+        // If request.url is also undefined, return a server error
+        return new NextResponse("Internal Server Error", { status: 500 });
+      }
     }
   }
 
-  // If not an admin route or variables are undefined, continue with normal processing
+  // If not an admin route, continue with normal processing
   return NextResponse.next();
 }
 
