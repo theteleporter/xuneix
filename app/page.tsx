@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import Header from "@/components/dormant/header";
+import { Footer } from "@/components/dormant/footer";
+import { Details } from "@/components/dormant/details"
 import ButtonComponent from "@/components/sub-components/loading-components";
 import { useRouter } from 'next/navigation';
 import { kv } from "@vercel/kv";
@@ -107,15 +109,20 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col h-auto items-center justify-center pt-32 container gap-5">
-        <div className="grid gap-2">
+      <main className="flex flex-col h-auto items-center justify-center pt-9 pb-20 container gap-5 w-full">
+        <h1 className="text-2xl font-semibold mb-2 text-start w-full">Next.js Link Rotator</h1>
+        <p className="text-start w-full">
+          Protect your admin panel with dynamic, time-sensitive URLs.
+        </p>
+   <Details />
+          <div className="grid gap-2">
           <label htmlFor="manualUrl">Enter Admin URL:</label>
           <Input
             type="text"
             id="manualUrl"
             value={manualUrl}
             onChange={(e) => setManualUrl(e.target.value)}
-            className="w-[400px] max-w-md"
+            className="w-[352px] max-w-md"
           />
           <label htmlFor="manualToken">Enter Token:</label>
           <Input
@@ -123,13 +130,13 @@ export default function Home() {
             id="manualToken"
             value={manualToken}
             onChange={(e) => setManualToken(e.target.value)}
-            className="w-[400px] max-w-md"
+            className="w-[352px] max-w-md"
           />
         </div>
         <Button
           disabled={isLoading}
           onClick={goToAdminPage}
-          className="mt-8 w-[400px] max-w-md"
+          className="mt-8 w-[352px] max-w-md"
         >
           {isLoading ? <ButtonComponent /> : "Go to Admin Page"}
         </Button>
@@ -147,7 +154,7 @@ export default function Home() {
           </div>
           <Input
             id="generatedAdminUrl"
-            className="w-[400px]" 
+            className="w-[352px]" 
             type="text" 
             value={adminUrl || ""}
             readOnly
@@ -164,15 +171,17 @@ export default function Home() {
           </div>
           <Input
             id="generatedAdminToken"
-            className="w-[400px]" 
+            className="w-[352px]" 
             type="text" 
             value={adminToken || ""}
             readOnly
           />
         </div>
-        <Button onClick={rotateLink} className="w-[400px] max-w-md">
+        <Button onClick={rotateLink} className="w-[352px] max-w-md">
           Rotate Link
         </Button>
+  
+    <Footer />
       </main>
     </>
   );

@@ -68,14 +68,24 @@ export const metadata: Metadata = {
   creator: "The Teleporter",
   publisher: "The Teleporter",
   appLinks: {
-    web: { url: `${process.env.NEXT_PUBLIC_APP_URL}`, should_fallback: true },
+    web: {
+      url:
+        process.env.NODE_ENV === "production"
+          ? new URL(`${process.env.NEXT_PUBLIC_APP_URL}`)
+          : new URL(`${process.env.DEVELOPMENT_APP_URL}`),
+      should_fallback: true,
+    },
   },
   formatDetection: {
     email: true,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL}`),
+  metadataBase:
+    process.env.NODE_ENV === "production"
+      ? new URL(`${process.env.NEXT_PUBLIC_APP_URL}`)
+      : new URL(`${process.env.DEVELOPMENT_APP_URL}`),
+
   alternates: {
     canonical: "/",
     languages: {
@@ -115,8 +125,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     locale: "en",
-    type: "website"
-  }
+    type: "website",
+  },
 };
 
 export default function RootLayout({
