@@ -9,6 +9,8 @@ import Header from "@/components/dormant/header";
 import ButtonComponent from "@/components/sub-components/loading-components";
 import { useRouter } from 'next/navigation';
 import { kv } from "@vercel/kv";
+import { Copy, Check } from "lucide-react"; 
+import { copyToClipboard } from "@/lib/utils";
 
 export default function Home() {
   const router = useRouter();
@@ -18,6 +20,23 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [manualUrl, setManualUrl] = useState("");
   const [manualToken, setManualToken] = useState("");
+  const [copiedUrl, setCopiedUrl] = useState(false);
+  const [copiedToken, setCopiedToken] = useState(false);
+
+  const handleCopy = async (text: string, setter: (value: boolean) => void) => {
+    try {
+      await copyToClipboard(text);
+      setter(true);
+      setTimeout(() => setter(false), 1500);
+    } catch (error) {
+      console.error("Error copying to clipboard:", error);
+      toast({
+        variant: "destructive",
+        title: "Copy Failed",
+        description: "Could not copy the text to the clipboard.",
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,11 +134,41 @@ export default function Home() {
           {isLoading ? <ButtonComponent /> : "Go to Admin Page"}
         </Button>
 
-        <div className="grid gap-2">
-          <label>Generated Admin URL:</label>
-          <Input className="w-[400px] max-w-md" type="text" value={adminUrl || ""} readOnly />
-          <label>Generated Token:</label>
-          <Input className="w-[400px] max-w-md" type="text" value={adminToken || ""} readOnly />
+        <div className="grid gap-2 max-w-md">
+          <div className="flex items-center gap-1">
+            <label htmlFor="generatedAdminUrl">Generated Admin URL:</label>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => handleCopy(adminUrl, setCopiedUrl)}
+            >
+              {copiedUrl ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            </Button>
+          </div>
+          <Input
+            id="generatedAdminUrl"
+            className="w-[400px]" 
+            type="text" 
+            value={adminUrl || ""}
+            readOnly
+          />
+          <div className="flex items-center gap-1">
+            <label htmlFor="generatedAdminToken">Generated Token:</label>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => handleCopy(adminToken, setCopiedToken)}
+            >
+              {copiedToken ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            </Button>
+          </div>
+          <Input
+            id="generatedAdminToken"
+            className="w-[400px]" 
+            type="text" 
+            value={adminToken || ""}
+            readOnly
+          />
         </div>
         <Button onClick={rotateLink} className="w-[400px] max-w-md">
           Rotate Link

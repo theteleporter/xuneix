@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { kv } from '@vercel/kv'; // Import Vercel KV
-import { ROTATED_URLS_KEY, MAX_ROTATED_URLS } from "@/app/constants";
+import { ADMIN_BASE_PATH, ROTATED_URLS_KEY, MAX_ROTATED_URLS } from "@/app/constants";
 
 export async function GET() {
     const newUrlSegment = crypto.randomBytes(5).toString("hex");
-    const newAdminUrl = `/admin/${newUrlSegment}`; // Base path for all admin pages
+    const newAdminUrl = `${ADMIN_BASE_PATH}/${newUrlSegment}`; // Base path for all admin pages
     const newToken = crypto
     .randomBytes(64) // You can adjust the token length as needed
     .toString("base64")
