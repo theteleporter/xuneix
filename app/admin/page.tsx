@@ -1,22 +1,20 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Link from "next/link";
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { ADMIN_BASE_PATH } from "../constants";
+import { ADMIN_BASE_PATH, ROTATED_URLS_KEY } from "../constants";
 import { kv } from "@vercel/kv";
 
 export default function AdminPage() {
@@ -25,20 +23,23 @@ export default function AdminPage() {
   const [adminToken, setAdminToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch rotated URLs and the admin token from Vercel KV
     const fetchData = async () => {
       try {
         const [storedRotatedUrls, storedAdminToken] = await Promise.all([
-          kv.get<string[] | null>("rotatedUrls"), // Type assertion for string[] or null
-          kv.get<string | null>("token"), // Type assertion for string or null
+          kv.get<string[]>(ROTATED_URLS_KEY),
+          kv.get<string>("token"),
         ]);
 
+        console.log("Fetched rotatedUrls:", storedRotatedUrls);
+        console.log("Fetched adminToken:", storedAdminToken);
+
         setRotatedUrls(storedRotatedUrls || []);
-        setAdminToken(storedAdminToken || null); // Handle potential null token
+        setAdminToken(storedAdminToken || null);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -51,21 +52,19 @@ export default function AdminPage() {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Rotated URLs</AlertDialogTitle>
+            <AlertDialogTitle>History of rotated URLs</AlertDialogTitle>
             <AlertDialogDescription>
               <ScrollArea className="h-72 rounded-md border">
                 <div className="p-4">
-                  {rotatedUrls.map((urlSegment, index) => {
-                    const fullUrl = `${
-                      process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-                    }${ADMIN_BASE_PATH}/${urlSegment}?token=${adminToken}`;
-                    return (
-                      <div key={index}>
-                        {/* Only render Link if adminToken is not null */}
-                        {adminToken && <Link href={fullUrl}>{fullUrl}</Link>}
-                      </div>
-                    );
-                  })}
+                  {rotatedUrls.map((urlSegment, index) => (
+                    <div key={index}>
+                      {adminToken && (
+                        <Link href={`${ADMIN_BASE_PATH}/${urlSegment}?token=${adminToken}`}>
+                          {`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}${ADMIN_BASE_PATH}/${urlSegment}?token=${adminToken}`}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </ScrollArea>
             </AlertDialogDescription>

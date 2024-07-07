@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -18,8 +18,8 @@ import { ROTATED_URLS_KEY } from "@/app/constants";
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
-  const [adminUrl, setAdminUrl] = useState<string>("");
-  const [adminToken, setAdminToken] = useState<string>("");
+  const [adminUrl, setAdminUrl] = useState<string | null>(null);
+  const [adminToken, setAdminToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [manualUrl, setManualUrl] = useState("");
   const [manualToken, setManualToken] = useState("");
@@ -48,8 +48,8 @@ export default function Home() {
       try {
         const [storedAdminUrl, storedAdminToken, storedRotatedUrls] =
           await Promise.all([
-            kv.get<string | null>("adminUrl"), // Allow null values
-            kv.get<string | null>("token"), // Allow null values
+            kv.get<string | null>("adminUrl"),
+            kv.get<string | null>("token"),
             kv.get<string[] | null>(ROTATED_URLS_KEY),
           ]);
 
@@ -108,8 +108,8 @@ export default function Home() {
   };
 
   const goToAdminPage = () => {
-    const url = manualUrl || adminUrl;
-    const token = manualToken || adminToken;
+    const url = manualUrl || adminUrl || "";
+    const token = manualToken || adminToken || "";
     if (url && token) {
       router.push(`${url}?token=${token}`);
     } else {
@@ -164,7 +164,7 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => handleCopy(adminUrl, setCopiedUrl)}
+              onClick={() => handleCopy(adminUrl || "", setCopiedUrl)}
             >
               {copiedUrl ? (
                 <Check className="h-4 w-4" />
@@ -177,7 +177,7 @@ export default function Home() {
             id="generatedAdminUrl"
             className="w-[352px]"
             type="text"
-            value={adminUrl || ""}
+            value={adminUrl || ""} // Display adminUrl if available, otherwise empty string
             readOnly
           />
           <div className="flex items-center gap-1">
@@ -185,7 +185,7 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => handleCopy(adminToken, setCopiedToken)}
+              onClick={() => handleCopy(adminToken || "", setCopiedToken)}
             >
               {copiedToken ? (
                 <Check className="h-4 w-4" />
@@ -198,7 +198,7 @@ export default function Home() {
             id="generatedAdminToken"
             className="w-[352px]"
             type="text"
-            value={adminToken || ""}
+            value={adminToken || ""} // Display adminToken if available, otherwise empty string
             readOnly
           />
         </div>
