@@ -1,5 +1,3 @@
-// api/rotated-urls.ts
-
 import { NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
 import { MAX_ROTATED_URLS, ROTATED_URLS_KEY } from "@/app/constants";
