@@ -220,7 +220,7 @@ export async function GET() {
       html: emailHtml,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ randomUrl: newAdminUrl, token: newToken });
   } catch (error) {
     console.error("Error generating/saving admin auth data:", error);
     return NextResponse.json(

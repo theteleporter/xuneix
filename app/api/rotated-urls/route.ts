@@ -4,7 +4,7 @@ import { MAX_ROTATED_URLS, ROTATED_URLS_KEY } from "@/app/constants";
 
 export async function GET() {
   try {
-    let rotatedUrls = (await kv.get(ROTATED_URLS_KEY)) || [];
+    let rotatedUrls = (await kv.get<string[] | null>(ROTATED_URLS_KEY)) || [];
     return NextResponse.json(rotatedUrls);
   } catch (error) {
     console.error("Error fetching rotated URLs:", error);
@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const newUrl = await request.json();
-    let rotatedUrls: string[] = (await kv.get(ROTATED_URLS_KEY)) || []; // Explicitly type as string[]
+    let rotatedUrls: string[] = (await kv.get<string[] | null>(ROTATED_URLS_KEY)) || []; // Explicitly type as string[]
     rotatedUrls.push(newUrl);
     if (rotatedUrls.length > MAX_ROTATED_URLS) {
       rotatedUrls.shift(); // Remove the oldest URL if exceeding the limit
