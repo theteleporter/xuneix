@@ -129,7 +129,7 @@ export default function Home() {
       <main className="flex flex-col h-auto items-center justify-center pt-9 pb-20 container gap-5 w-full">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold mb-2 text-start">
-            Next.js Link Rotator
+            Link Rotation Tool
           </h1>
           <Button variant="outline" size="icon" asChild>
             <Link href="https://github.com/theteleporter/xuneix" target="_blank" rel="noopener noreferrer">
