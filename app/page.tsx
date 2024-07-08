@@ -73,9 +73,8 @@ export default function Home() {
         }
 
         if (storedRotatedUrls && storedRotatedUrls.length > 0) {
-          // Get the latest URL (the last one in the array)
           setAdminUrl(storedRotatedUrls[storedRotatedUrls.length - 1]);
-          setRotatedUrls(storedRotatedUrls); // Update rotatedUrls state
+          setRotatedUrls(storedRotatedUrls);
         }
       } catch (error) {
         console.error("Error fetching data from KV:", error);
@@ -90,7 +89,7 @@ export default function Home() {
       }
     };
 
-    fetchData(); // Fetch only once when the component mounts
+    fetchData();
   }, [toast]);
 
   const rotateLink = async () => {
@@ -131,7 +130,7 @@ export default function Home() {
           <h1 className="text-2xl font-semibold mb-2 text-start">
             Link Rotation Tool
           </h1>
-          <Button variant="outline" size="icon" asChild>
+          <Button variant="outline" asChild>
             <Link href="https://github.com/theteleporter/xuneix" target="_blank" rel="noopener noreferrer">
               <GitHubLogoIcon className="mr-2 h-4 w-4" /> 
               GitHub
@@ -187,7 +186,7 @@ export default function Home() {
             id="generatedAdminUrl"
             className="w-[352px]"
             type="text"
-            value={adminUrl || ""} // Display adminUrl if available, otherwise empty string
+            value={adminUrl || ""}
             readOnly
           />
           <div className="flex items-center gap-1">
@@ -208,7 +207,7 @@ export default function Home() {
             id="generatedAdminToken"
             className="w-[352px]"
             type="text"
-            value={adminToken || ""} // Display adminToken if available, otherwise empty string
+            value={adminToken || ""}
             readOnly
           />
         </div>
