@@ -133,7 +133,7 @@ export default function Home() {
           </h1>
           <Button variant="outline" size="icon" asChild>
             <Link href="https://github.com/theteleporter/xuneix" target="_blank" rel="noopener noreferrer">
-              GitHubLogoIcon className="mr-2 h-4 w-4" /> 
+              <GitHubLogoIcon className="mr-2 h-4 w-4" /> 
               GitHub
             </Link>
           </Button>
