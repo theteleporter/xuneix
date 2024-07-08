@@ -15,7 +15,7 @@ import { Copy, Check } from "lucide-react";
 import { copyToClipboard } from "@/lib/utils";
 import { ROTATED_URLS_KEY } from "@/app/constants";
 import Link from "next/link";
-import { GithubLogo } from "@radix-ui/react-icons";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
   
 export default function Home() {
   const router = useRouter();
@@ -133,7 +133,7 @@ export default function Home() {
           </h1>
           <Button variant="outline" size="icon" asChild>
             <Link href="https://github.com/theteleporter/xuneix" target="_blank" rel="noopener noreferrer">
-              <GithubLogo className="mr-2 h-4 w-4" /> 
+              GitHubLogoIcon className="mr-2 h-4 w-4" /> 
               GitHub
             </Link>
           </Button>
