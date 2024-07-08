@@ -122,7 +122,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col h-auto items-center justify-center pt-9 pb-20 container gap-5 w-full">
+      <main className="flex flex-col h-auto items-center justify-center pt-9 container gap-5 w-full">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold mb-2 text-start">
             Link Rotation Tool
@@ -208,7 +208,7 @@ export default function Home() {
             readOnly
           />
         </div>
-        <Button onClick={rotateLink} className="w-[352px] max-w-md">
+        <Button onClick={rotateLink} className="w-[352px] max-w-md mb-20">
           Rotate Link
         </Button>
       </main>
