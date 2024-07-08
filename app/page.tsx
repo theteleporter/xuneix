@@ -5,8 +5,6 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import Header from "@/components/dormant/header";
-import { Footer } from "@/components/dormant/footer";
 import { Details } from "@/components/dormant/details";
 import ButtonComponent from "@/components/sub-components/loading-components";
 import { useRouter } from "next/navigation";
@@ -124,7 +122,6 @@ export default function Home() {
 
   return (
     <>
-      <Header />
       <main className="flex flex-col h-auto items-center justify-center pt-9 pb-20 container gap-5 w-full">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold mb-2 text-start">
@@ -214,8 +211,6 @@ export default function Home() {
         <Button onClick={rotateLink} className="w-[352px] max-w-md">
           Rotate Link
         </Button>
-
-        <Footer />
       </main>
     </>
   );

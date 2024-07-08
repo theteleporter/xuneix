@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/dormant/header";
+import { Footer } from "@/components/dormant/footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -148,7 +150,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+        <Header />
           {children}
+        <Footer />
           <Toaster />
         </ThemeProvider>
       </body>
