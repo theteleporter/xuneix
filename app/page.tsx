@@ -11,7 +11,7 @@ import { Details } from "@/components/dormant/details";
 import ButtonComponent from "@/components/sub-components/loading-components";
 import { useRouter } from "next/navigation";
 import { kv } from "@vercel/kv";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, GithubLogo } from "lucide-react";
 import { copyToClipboard } from "@/lib/utils";
 import { ROTATED_URLS_KEY } from "@/app/constants";
 
@@ -125,9 +125,17 @@ export default function Home() {
     <>
       <Header />
       <main className="flex flex-col h-auto items-center justify-center pt-9 pb-20 container gap-5 w-full">
-        <h1 className="text-2xl font-semibold mb-2 text-start w-full">
-          Next.js Link Rotator
-        </h1>
+        <div className="flex w-full justify-between items-center">
+          <h1 className="text-2xl font-semibold mb-2 text-start">
+            Next.js Link Rotator
+          </h1>
+          <Button variant="outline" size="icon" asChild>
+            <Link href="https://github.com/theteleporter/xuneix" target="_blank" rel="noopener noreferrer">
+              <GithubLogo className="mr-2 h-4 w-4" /> 
+              GitHub
+            </Link>
+          </Button>
+        </div>
         <p className="text-start w-full">
           Protect your admin panel with dynamic, time-sensitive URLs.
         </p>
