@@ -14,6 +14,7 @@ import { kv } from "@vercel/kv";
 import { Copy, Check, GithubLogo } from "lucide-react";
 import { copyToClipboard } from "@/lib/utils";
 import { ROTATED_URLS_KEY } from "@/app/constants";
+import Link from "next/link"
 
 export default function Home() {
   const router = useRouter();
