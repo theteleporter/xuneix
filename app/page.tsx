@@ -11,11 +11,12 @@ import { Details } from "@/components/dormant/details";
 import ButtonComponent from "@/components/sub-components/loading-components";
 import { useRouter } from "next/navigation";
 import { kv } from "@vercel/kv";
-import { Copy, Check, GithubLogo } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import { copyToClipboard } from "@/lib/utils";
 import { ROTATED_URLS_KEY } from "@/app/constants";
-import Link from "next/link"
-
+import Link from "next/link";
+import { GithubLogo } from "@radix-ui/react-icons";
+  
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
