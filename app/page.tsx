@@ -14,7 +14,8 @@ import { copyToClipboard } from "@/lib/utils";
 import { ROTATED_URLS_KEY } from "@/app/constants";
 import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-  
+import { Banner } from "@/components/sub-components/banner"
+
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
@@ -137,6 +138,7 @@ export default function Home() {
         <p className="text-start w-full">
           Protect your admin panel with dynamic, time-sensitive URLs.
         </p>
+        <Banner />
         <Details />
         <div className="grid gap-2">
           <label htmlFor="manualUrl">Enter Admin URL:</label>
