@@ -21,11 +21,8 @@ import Link from "next/link";
 import {
   PanelLeft,
   Package2,
-  Home,
-  ShoppingCart,
-  Package,
+  AppWindowMac,
   Users2,
-  LineChart,
 } from "lucide-react";
 import { ThemeToggle } from "../sub-components/theme-toggle";
 import Logo from "./logo";
@@ -56,7 +53,7 @@ export default function Header() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
-                  <Home className="h-5 w-5" />
+                  <AppWindowMac className="h-5 w-5" />
                   Crept Studio
                 </Link>
                 <Link
@@ -83,7 +80,7 @@ export default function Header() {
                 className="overflow-hidden rounded-full"
               >
                 <Image
-                  src="/icon.jpeg"
+                  src="/theteleporter_invert_icon.png"
                   width={36}
                   height={36}
                   alt="Avatar"
