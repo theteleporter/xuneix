@@ -23,7 +23,7 @@ export const Banner = () => {
                 "border-b border-spacing-4 border-white/80 hover:border-none transition-all ease-out duration-500"
               }
             >
-              folk the app
+              folk the repo
             </Link>{" "}
             and link it to another Vercel-Kv instance or a database to test it.{" "}
           </AlertDescription>
