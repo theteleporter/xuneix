@@ -17,7 +17,8 @@ export const Banner = () => {
             The page may not re-route to this app&#39;s admin page due to
             exceeded Vercel-Kv requests. You can{" "}
             <Link
-              href={"https://www.github.com/"}
+              href={"https://github.com/theteleporter/xuneix"}
+              target={"_blank"}
               className={
                 "border-b border-spacing-4 border-white/80 hover:border-none transition-all ease-out duration-500"
               }
