@@ -1,4 +1,4 @@
-# XUNEIX Link Rotator
+# Neix Link Rotator
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -31,13 +31,13 @@ Secure your Next.js admin panel with this open-source link rotator! 🛡️ This
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/theteleporter/xuneix.git
+    git clone https://github.com/theteleporter/neix.git
     ```
 
 2. **Install Dependencies:**
 
     ```bash
-    cd xuneix
+    cd neix
     npm install
     ```
 
@@ -74,6 +74,79 @@ Secure your Next.js admin panel with this open-source link rotator! 🛡️ This
     * Copy the values from the input fields or your email notification.
     * Paste them into your browser's address bar (including the `?token=` part).
 4. **Click "Rotate Link"** to generate a new secure link anytime. This will invalidate the old link and send a new one via email (if configured).
+
+## Monorepo Structure
+
+The repository is structured as a monorepo using TurboRepo. Below is the structure:
+
+```
+neix/
+├── apps/
+│   ├── web/                      # The main web app for Neix
+│   ├── docs/                     # Documentation app (e.g., Next.js with MDX for docs)
+│   └── other-apps/               # Placeholder for potential future apps
+├── packages/
+│   ├── security/                 # Security package (route protection, token, email alerts)
+│   ├── core/                     # Core shared utilities or configurations
+│   ├── ui/                       # UI components (could be used across apps and packages)
+│   └── ...                       # Other packages as Neix grows
+├── turbo.json                    # Turbo config file for orchestrating tasks across apps/packages
+├── tsconfig.json                 # Root TypeScript config for managing dependencies across apps/packages
+├── .eslintrc.json                # ESLint config for consistent code quality
+├── package.json                  # Monorepo-level package manager config
+└── README.md                     # Monorepo-level README for contributors
+```
+
+## Security Package
+
+The security package is designed to be flexible and developer-friendly. Below is a general roadmap for making it customizable:
+
+### 1. Modularize the Middleware
+
+* **Customizable Auth Triggers:** Allow developers to configure which actions (e.g., failed login, unauthorized route access) should trigger the email alert with a token.
+* **Token Generation:** Provide customizable options for token format (length, type, expiration).
+* **Email Settings:** Enable configuration of the email subject, sender details, and the email service (SMTP, SendGrid, etc.).
+
+### 2. Token Verification
+
+* **Verification Endpoint:** Create a pre-built endpoint for verifying tokens.
+* **Customizable Actions:** After verification, allow developers to define what happens next (e.g., grant access, log the attempt, send additional alerts).
+
+### 3. Security Enhancements
+
+* **IP Logging & Throttling:** Options for logging IP addresses, device fingerprints, and throttling access attempts.
+* **Customizable Alerts:** Allow multiple admin recipients or different alert levels (info, warning, critical).
+
+### 4. Integration & Documentation
+
+* **Config File:** A configuration file (e.g., security.config.js) where developers set parameters for their use case.
+* **Extensive Documentation:** Instructions on setup, available options, and example use cases.
+
+### 5. Token Security & Expiry
+
+* **Auto-Expiration:** Add token expiration control (e.g., tokens that auto-expire after a set time) and allow for custom expiration times.
+* **Single-Use Option:** Option to make tokens single-use, preventing reuse for added security.
+* **Encryption:** Use encryption for token storage to protect sensitive data.
+
+### 6. Advanced Notification Options
+
+* **Multi-Channel Notifications:** Besides email, offer integrations with other alert channels like SMS, Slack, or even Telegram for instant notifications.
+* **Alert Templates:** Customizable email templates with placeholders, so developers can easily personalize the alert messages.
+
+### 7. Access Control & Auditing
+
+* **Role-Based Access Control (RBAC):** Add options to define roles and access levels, making route protection flexible across different user types.
+* **Audit Log:** Keep a log of all attempts, tokens generated, and access granted or denied, with timestamps. Developers could use this to track suspicious activity.
+
+### 8. Developer Tools
+
+* **CLI Tool:** A command-line tool for generating configuration files, setting up initial keys, and testing alerts.
+* **Debug Mode:** A debug mode to test the middleware locally without triggering real alerts, which could help in testing and setup.
+
+### 9. Customizable Middleware Pipeline
+
+* **Middleware Composition:** Enable chaining with other middleware, like adding logging, rate limiting, or custom error handlers.
+* **Hook System:** Add hooks, such as beforeTokenGeneration or afterTokenVerification, so developers can inject their own logic at different stages.
 
 ## Contributing
 

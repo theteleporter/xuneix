@@ -24,8 +24,8 @@ export const viewport: Viewport = {
 };
 export const metadata: Metadata = {
   title: {
-    default: "Xuneix",
-    template: "%s | Xuneix",
+    default: "Neix",
+    template: "%s | Neix",
   },
   description:
     "Protect and secure your Next.js admin panel with this open-source link rotator. Automatically generate dynamic, time-sensitive URLs with secure tokens to deter unauthorized access. Easy setup, customizable rotation frequency, and built with modern Shadcn UI and Tailwind CSS. Integrate seamlessly with Vercel KV for persistent storage. Perfect for developers looking to add an extra layer of security to their projects. ",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     "URL Protection",
   ],
   generator: "The Teleporter",
-  applicationName: "Xuneix",
+  applicationName: "Neix",
   referrer: "origin-when-cross-origin",
   authors: [
     {

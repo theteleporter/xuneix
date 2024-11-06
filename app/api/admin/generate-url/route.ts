@@ -166,7 +166,7 @@ export async function GET() {
       <a href="${process.env.NEXT_PUBLIC_APP_URL}">
         <img src="${
           process.env.NEXT_PUBLIC_APP_URL
-        }/icon.jpeg" width="32" height="32" alt="Xuneix, Inc">
+        }/icon.jpeg" width="32" height="32" alt="Neix, Inc">
       </a>
     </div>
     <div style="font-size: 24px; line-height: 1.25;">
@@ -195,7 +195,7 @@ export async function GET() {
       }">Visit official website</a>
     </div>
 
-    <p style="color: #6a737d; font-size: 12px; text-align: center; margin-top: 60px;">Crept, Inc. ・57 Space Xuneix, Inc ・Los Angels, CA 90020</p>
+    <p style="color: #6a737d; font-size: 12px; text-align: center; margin-top: 60px;">Neix, Inc. ・57 Space Neix, Inc ・Los Angels, CA 90020</p>
   </div>
 </body>
 </html>
@@ -214,7 +214,7 @@ export async function GET() {
     });
 
     await transporter.sendMail({
-      from: `Xuneix Inc <support@${process.env.COMPANY_EMAIL}>`,
+      from: `Neix Inc <support@${process.env.COMPANY_EMAIL}>`,
       to: process.env.ADMIN_EMAIL, // Replace with your admin email
       subject: "New Admin Panel Access",
       html: emailHtml,
